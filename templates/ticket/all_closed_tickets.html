@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="card mx-auto" style="width: 76rem;">
+    <div class="card-body">
+        <h5 class="card-title mb-3">All Closed Tickets</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Ticket ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Created By</th>
+                    <th scope="col">Assigned To</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td><small>{{ ticket.ticket_number }}</small></td>
+                    <td><small>{{ ticket.title }}</small></td>
+                    <td><small>{{ ticket.created_by }}</small></td>
+                    <td>{{ ticket.assigned_to }}</td>
+                    {% if ticket.ticket_status == 'Active' %}
+                    <td><span class="badge bg-success">Active</span></td>
+                    {% elif ticket.ticket_status == 'Pending' %}
+                    <td><span class="badge bg-warning">Pending</span></td>
+                    {% elif ticket.ticket_status == 'Completed' %}
+                    <td><span class="badge bg-danger">Completed</span></td>
+                    {% endif %}
+                    <td>
+                        <small>
+                            <a href="{% url 'ticket-details' ticket.pk %}">View Details</a>
+                            {% if ticket.is_resolved %}
+                                <form action="{% url 'delete-ticket' ticket.id %}" method="POST" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            {% endif %}
+                        </small>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+{% endblock content %}

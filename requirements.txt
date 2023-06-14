@@ -1,0 +1,10 @@
+asgiref==3.7.2
+backports.zoneinfo==0.2.1
+beautifulsoup4==4.12.2
+Django==4.2.1
+django-bootstrap4==23.1
+django-widget-tweaks==1.4.12
+psycopg==3.1.9
+soupsieve==2.4.1
+sqlparse==0.4.4
+typing-extensions==4.6.2
